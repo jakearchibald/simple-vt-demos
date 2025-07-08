@@ -1,7 +1,6 @@
 import { getPageContent, onLinkNavigate, transitionHelper } from "../utils.js";
 
-const dustUrl =
-  "https://cdn.glitch.global/b2a0e9e8-12a2-4158-b2d8-11ef08ab8d68/dust%20(1).avif?v=1676473942321";
+const dustUrl = "/resources/dust-1.avif";
 
 async function decodeImg(url) {
   const img = new Image();
@@ -14,13 +13,12 @@ onLinkNavigate(async ({ toPath }) => {
   const content = await getPageContent(toPath);
 
   // Dummy element for the dust
-  for (const name of ['dust-1', 'dust-2']) {
+  for (const name of ["dust-1", "dust-2"]) {
     const div = document.createElement("div");
     div.style.viewTransitionName = name;
     div.style.contain = "paint";
-    document.body.append(div);  
+    document.body.append(div);
   }
-  
 
   const transition = transitionHelper({
     updateDOM() {
@@ -64,12 +62,11 @@ onLinkNavigate(async ({ toPath }) => {
 
     const setTransform = (transform) =>
       (style.sheet.rules[0].style.transform = transform);
-    
+
     const dropDuration = innerHeight / 3;
     const dustDuration = 500;
 
-    
-    for (const name of ['dust-1', 'dust-2']) {
+    for (const name of ["dust-1", "dust-2"]) {
       document.documentElement.animate(
         {
           transform: ["translateY(100%)", "none"],
@@ -95,7 +92,7 @@ onLinkNavigate(async ({ toPath }) => {
           pseudoElement: `::view-transition-group(${name})`,
         }
       );
-      
+
       document.documentElement.animate(
         {
           opacity: ["0", "1"],
@@ -122,8 +119,6 @@ onLinkNavigate(async ({ toPath }) => {
         }
       );
     }
-
-    
 
     await document.documentElement.animate(
       {

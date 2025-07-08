@@ -1,6 +1,6 @@
 import { getPageContent, onLinkNavigate, transitionHelper } from "../utils.js";
 
-const dustUrl = 'https://cdn.glitch.global/b2a0e9e8-12a2-4158-b2d8-11ef08ab8d68/dust%20(1).avif?v=1676473942321';
+const dustUrl = "/resources/dust-1.avif";
 
 async function decodeImg(url) {
   const img = new Image();
@@ -26,11 +26,11 @@ function easeOutBounce(x) {
 onLinkNavigate(async ({ toPath }) => {
   const dustDecode = decodeImg(dustUrl).catch(() => {});
   const content = await getPageContent(toPath);
-  
+
   // Dummy element for the dust
-  const div = document.createElement('div');
-  div.style.viewTransitionName = 'dust';
-  div.style.contain = 'paint';
+  const div = document.createElement("div");
+  div.style.viewTransitionName = "dust";
+  div.style.contain = "paint";
   document.body.append(div);
 
   const transition = transitionHelper({
@@ -52,7 +52,7 @@ onLinkNavigate(async ({ toPath }) => {
         pseudoElement: "::view-transition-group(root)",
       }
     );
-    
+
     await dustDecode;
 
     // To set pseudo styles, you need to use a stylesheet:
@@ -69,7 +69,7 @@ onLinkNavigate(async ({ toPath }) => {
 
     const setTransform = (transform) =>
       (style.sheet.rules[0].style.transform = transform);
-    
+
     const dropDuration = 1500;
     const dustLaunch = dropDuration * 0.364;
     const start = document.timeline.currentTime;
@@ -89,57 +89,57 @@ onLinkNavigate(async ({ toPath }) => {
     };
 
     requestAnimationFrame(frame);
-    
+
     const dustDuration = 500;
-    
+
     document.documentElement.animate(
       {
-        transform: ['translateY(100%)', 'none'],
+        transform: ["translateY(100%)", "none"],
       },
       {
         duration: dustDuration,
         delay: dustLaunch,
-        fill: 'both',
-        easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        fill: "both",
+        easing: "cubic-bezier(0.16, 1, 0.3, 1)",
         pseudoElement: "::view-transition-group(dust)",
       }
     );
-    
+
     document.documentElement.animate(
       {
-        scale: ['1', '1.3'],
+        scale: ["1", "1.3"],
       },
       {
         duration: dustDuration,
         delay: dustLaunch,
-        fill: 'both',
-        easing: 'linear',
+        fill: "both",
+        easing: "linear",
         pseudoElement: "::view-transition-group(dust)",
       }
     );
-    
+
     document.documentElement.animate(
       {
-        opacity: ['0', '1'],
+        opacity: ["0", "1"],
       },
       {
         duration: 50,
         delay: dustLaunch,
-        fill: 'both',
-        easing: 'ease',
+        fill: "both",
+        easing: "ease",
         pseudoElement: "::view-transition-group(dust)",
       }
     );
-    
+
     document.documentElement.animate(
       {
-        opacity: ['1', '0'],
+        opacity: ["1", "0"],
       },
       {
         duration: 300,
         delay: dustLaunch + (dustDuration - 300),
-        fill: 'both',
-        easing: 'ease',
+        fill: "both",
+        easing: "ease",
         pseudoElement: "::view-transition-group(dust)",
       }
     );
