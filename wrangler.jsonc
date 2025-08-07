@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "random-static-stuff",
+  "name": "simple-vt-demos",
   "compatibility_date": "2025-07-08",
   "assets": {
     "directory": "./dist"
