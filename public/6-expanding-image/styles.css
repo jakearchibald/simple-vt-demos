@@ -19,29 +19,49 @@
 }
 
 @keyframes fade-in {
-  from { opacity: 0; }
+  from {
+    opacity: 0;
+  }
 }
 
 @keyframes fade-out {
-  to { opacity: 0; }
+  to {
+    opacity: 0;
+  }
 }
 
 @keyframes slide-from-right {
-  from { transform: translateX(30px); }
+  from {
+    transform: translateX(30px);
+  }
 }
 
 @keyframes slide-to-left {
-  to { transform: translateX(-30px); }
+  to {
+    transform: translateX(-30px);
+  }
+}
+
+html {
+  --vt-anim-multiplier: 1;
+}
+
+::view-transition-group(*) {
+  animation-duration: calc(0.25s * var(--vt-anim-multiplier));
 }
 
 ::view-transition-old(root) {
-  animation: 90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
+  animation: calc(var(--vt-anim-multiplier) * 90ms) cubic-bezier(0.4, 0, 1, 1)
+      both fade-out,
+    calc(var(--vt-anim-multiplier) * 300ms) cubic-bezier(0.4, 0, 0.2, 1) both
+      slide-to-left;
 }
 
 ::view-transition-new(root) {
-  animation: 210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-    300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
+  animation: calc(var(--vt-anim-multiplier) * 210ms) cubic-bezier(0, 0, 0.2, 1)
+      calc(var(--vt-anim-multiplier) * 90ms) both fade-in,
+    calc(var(--vt-anim-multiplier) * 300ms) cubic-bezier(0.4, 0, 0.2, 1) both
+      slide-from-right;
 }
 
 ::view-transition-old(banner-img),
