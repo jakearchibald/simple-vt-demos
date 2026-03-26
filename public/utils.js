@@ -29,35 +29,35 @@ export async function onLinkNavigate(callback) {
     document.addEventListener('click', (event) => {
       const link = event.target.closest('a');
       if (!link) return;
-      
+
       event.preventDefault();
-      
+
       const toUrl = new URL(link.href);
-      
+
       callback({
         toPath: toUrl.pathname,
         fromPath: location.pathname,
         isBack: false,
       });
-      
+
       history.pushState({}, null, toUrl.pathname);
-      
+
     });
     return;
   }
-  
+
   navigation.addEventListener('navigate', (event) => {
     const toUrl = new URL(event.destination.url);
-    
+
     if (location.origin !== toUrl.origin) return;
-    
+
     const fromPath = location.pathname;
     const isBack = isBackNavigation(event);
-    
+
     event.intercept({
       async handler() {
         if (event.info === 'ignore') return;
-        
+
         await callback({
           toPath: toUrl.pathname,
           fromPath,
@@ -70,7 +70,7 @@ export async function onLinkNavigate(callback) {
 
 export function getLink(href) {
   const fullLink = new URL(href, location.href).href;
-  
+
   return [...document.querySelectorAll('a')].find((link) =>
     link.href === fullLink
   );
@@ -81,14 +81,17 @@ export function getLink(href) {
 // It also makes it easier to add class names to the document element.
 export function transitionHelper({
   skipTransition = false,
-  classNames = '',
+  classNames = "",
+  types = [],
   updateDOM,
 }) {
   if (skipTransition || !document.startViewTransition) {
-    const updateCallbackDone = Promise.resolve(updateDOM()).then(() => undefined);
+    const updateCallbackDone = Promise.resolve(updateDOM()).then(
+      () => undefined,
+    );
 
     return {
-      ready: Promise.reject(Error('View transitions unsupported')),
+      ready: Promise.reject(Error("View transitions unsupported")),
       domUpdated: updateCallbackDone,
       updateCallbackDone,
       finished: updateCallbackDone,
@@ -99,10 +102,13 @@ export function transitionHelper({
 
   document.documentElement.classList.add(...classNamesArray);
 
-  const transition = document.startViewTransition(updateDOM);
+  const transition = document.startViewTransition({
+    update: updateDOM,
+    types,
+  });
 
   transition.finished.finally(() =>
-    document.documentElement.classList.remove(...classNamesArray)
+    document.documentElement.classList.remove(...classNamesArray),
   );
 
   return transition;

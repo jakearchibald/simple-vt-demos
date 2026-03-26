@@ -23,6 +23,12 @@
   }
 }
 
+@keyframes group-rotate-back {
+  to {
+    transform: rotateY(90deg);
+  }
+}
+
 @keyframes fade-out-a-bit {
   to {
     opacity: 0.5;
@@ -49,4 +55,16 @@
   transform: rotateY(90deg);
   inset: 0 auto 0 100%;
   animation: 600ms ease forwards fade-in-a-bit;
+}
+
+:active-view-transition-type(back) {
+  &::view-transition-group(root) {
+    animation-name: group-rotate-back;
+  }
+
+  &::view-transition-new(root) {
+    transform-origin: 100% 0;
+    transform: rotateY(-90deg);
+    inset: 0 auto 0 -100%;
+  }
 }
