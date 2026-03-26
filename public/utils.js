@@ -62,6 +62,7 @@ export async function onLinkNavigate(callback) {
           toPath: toUrl.pathname,
           fromPath,
           isBack,
+          hasUAVisualTransition: event.hasUAVisualTransition,
         });
       },
     });

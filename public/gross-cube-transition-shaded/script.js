@@ -1,9 +1,10 @@
 import { getPageContent, onLinkNavigate, transitionHelper } from '../utils.js';
 
-onLinkNavigate(async ({ toPath, isBack }) => {
+onLinkNavigate(async ({ toPath, isBack, hasUAVisualTransition }) => {
   const content = await getPageContent(toPath);
 
   const transition = transitionHelper({
+    skipTransition: hasUAVisualTransition,
     types: isBack ? ["back"] : [],
     updateDOM() {
       // This is a pretty heavy-handed way to update page content.
