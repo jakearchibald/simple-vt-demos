@@ -14,6 +14,8 @@ function tryCloseWatcherHack() {
 }
 
 onLinkNavigate(async ({ toPath, isBack, hasUAVisualTransition }) => {
+  tryCloseWatcherHack();
+
   const content = await getPageContent(toPath);
 
   const transition = transitionHelper({
@@ -25,7 +27,6 @@ onLinkNavigate(async ({ toPath, isBack, hasUAVisualTransition }) => {
       // or using a framework.
       // innerHTML is used here just to keep the DOM update super simple.
       document.body.innerHTML = content;
-      tryCloseWatcherHack();
     },
   });
 });
